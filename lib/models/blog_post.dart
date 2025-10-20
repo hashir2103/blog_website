@@ -1,4 +1,4 @@
-enum BlogCategory { economic, tech, newArrivals, health }
+enum BlogCategory { economic, tech, entertainment, health }
 
 extension BlogCategoryExtension on BlogCategory {
   String get displayName {
@@ -7,7 +7,7 @@ extension BlogCategoryExtension on BlogCategory {
         return 'Economic';
       case BlogCategory.tech:
         return 'Technology';
-      case BlogCategory.newArrivals:
+      case BlogCategory.entertainment:
         return 'Entertainment';
       case BlogCategory.health:
         return 'Health';

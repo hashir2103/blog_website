@@ -70,12 +70,15 @@ class BlogService {
         'publish_date': DateTime.now().toIso8601String(),
       };
 
+      print('Creating post with data: $postData'); // Debug log
+
       final response = await _client
           .from('blog_posts')
           .insert(postData)
           .select()
           .single();
 
+      print('Post created successfully: $response'); // Debug log
       return BlogPost.fromJson(response);
     } catch (e) {
       print('Error creating post: $e');

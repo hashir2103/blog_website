@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS public.blog_posts (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
-    category TEXT NOT NULL CHECK (category IN ('economic', 'tech', 'newArrivals')),
+    category TEXT NOT NULL CHECK (category IN ('economic', 'tech', 'entertainment', 'health')),
     image_url TEXT DEFAULT '',
     publish_date TIMESTAMPTZ DEFAULT NOW(),
     created_at TIMESTAMPTZ DEFAULT NOW(),

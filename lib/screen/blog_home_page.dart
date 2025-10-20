@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'dart:typed_data';
 import '../models/blog_post.dart';
 import '../services/blog_service.dart';
@@ -165,14 +166,14 @@ class _BlogHomePageState extends State<BlogHomePage> {
       height: 120,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Colors.black, // Changed back to black as requested
         borderRadius: BorderRadius.circular(4),
       ),
       child: const Center(
         child: Text(
           'Advertisement',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.white, // Changed back to white for black background
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
@@ -254,9 +255,7 @@ class _BlogHomePageState extends State<BlogHomePage> {
         children: [
           InkWell(
             onTap: () {
-              if (!_isEditMode) {
-                _showBlogPostDetail(post);
-              }
+              _showBlogPostDetail(post);
             },
             borderRadius: BorderRadius.circular(8),
             child: Column(
@@ -330,12 +329,14 @@ class _BlogHomePageState extends State<BlogHomePage> {
                       const SizedBox(height: 8),
 
                       // Content Preview
-                      Text(
-                        post.content,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade600,
-                          height: 1.4,
+                      RichText(
+                        text: _parseMarkdownToTextSpan(
+                          post.content,
+                          TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade600,
+                            height: 1.4,
+                          ),
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
@@ -403,49 +404,17 @@ class _BlogHomePageState extends State<BlogHomePage> {
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.85,
           padding: const EdgeInsets.all(32),
+          decoration: BoxDecoration(
+            color: Colors.white, // Set white background
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header with ad placeholder and close button
+              // Header with close button
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // Ad Placeholder
-                  Expanded(
-                    child: Container(
-                      height: 60,
-                      margin: const EdgeInsets.only(right: 16),
-                      decoration: BoxDecoration(
-                        color: Colors.blue.shade100,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Colors.blue.shade300,
-                          width: 2,
-                        ),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.ads_click,
-                              size: 24,
-                              color: Colors.blue.shade600,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Google Ad Space',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.blue.shade700,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                   // Close Button
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -453,7 +422,7 @@ class _BlogHomePageState extends State<BlogHomePage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
 
               // Scrollable content
               Expanded(
@@ -461,42 +430,101 @@ class _BlogHomePageState extends State<BlogHomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Image
+                      // Image and Ad Layout
                       if (post.imageUrl.isNotEmpty)
                         Container(
                           width: double.infinity,
-                          height: 350,
                           margin: const EdgeInsets.only(bottom: 32),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.15),
-                                blurRadius: 12,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.network(
-                              post.imageUrl,
-                              width: double.infinity,
-                              height: 350,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey.shade300,
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.image,
-                                      size: 60,
-                                      color: Colors.grey,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Left Image
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(
+                                          alpha: 0.15,
+                                        ),
+                                        blurRadius: 12,
+                                        offset: const Offset(0, 6),
+                                      ),
+                                    ],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Image.network(
+                                      post.imageUrl,
+                                      fit: BoxFit.contain,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                            return Container(
+                                              height: 200,
+                                              color: Colors.grey.shade300,
+                                              child: const Center(
+                                                child: Icon(
+                                                  Icons.image,
+                                                  size: 60,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            );
+                                          },
                                     ),
                                   ),
-                                );
-                              },
-                            ),
+                                ),
+                              ),
+                              // Right Ad Space
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  height: 300,
+                                  margin: const EdgeInsets.only(left: 16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.ads_click,
+                                        size: 32,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        'Advertisement',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey.shade700,
+                                            ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        '300x250',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: Colors.grey.shade500,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
 
@@ -545,16 +573,43 @@ class _BlogHomePageState extends State<BlogHomePage> {
                             width: 1,
                           ),
                         ),
-                        child: Text(
-                          post.content,
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(
-                                color: Colors.black87,
-                                height: 1.8,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0.3,
-                              ),
+                        child: MarkdownBody(
+                          data: post.content,
+                          styleSheet: MarkdownStyleSheet(
+                            p: TextStyle(
+                              color: Colors.black87,
+                              height: 1.8,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 0.3,
+                            ),
+                            strong: TextStyle(
+                              color: Colors.black87,
+                              height: 1.8,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.3,
+                            ),
+                            h1: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              height: 1.3,
+                            ),
+                            h2: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              height: 1.3,
+                            ),
+                            h3: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              height: 1.3,
+                            ),
+                          ),
+                          selectable: true,
                         ),
                       ),
                     ],
@@ -875,9 +930,10 @@ class _BlogHomePageState extends State<BlogHomePage> {
                         const SizedBox(height: 8),
                         TextField(
                           controller: contentController,
-                          maxLines: 8,
+                          maxLines: 15, // Increased from 8 to 15 lines
                           decoration: InputDecoration(
-                            hintText: 'Enter post content',
+                            hintText:
+                                'Enter post content (use **text** for bold)',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -1167,7 +1223,7 @@ class _BlogHomePageState extends State<BlogHomePage> {
             .toList();
       case 2: // Entertainment
         return allPosts
-            .where((post) => post.category == BlogCategory.newArrivals)
+            .where((post) => post.category == BlogCategory.entertainment)
             .toList();
       case 3: // Health
         return allPosts
@@ -1184,17 +1240,70 @@ class _BlogHomePageState extends State<BlogHomePage> {
         return Colors.orange;
       case BlogCategory.tech:
         return Colors.blue;
-      case BlogCategory.newArrivals:
+      case BlogCategory.entertainment:
         return Colors.purple;
       case BlogCategory.health:
         return Colors.green;
     }
   }
 
+  // Helper method to get category from tab index
+  BlogCategory _getCategoryFromIndex(int index) {
+    switch (index) {
+      case 0: // Economic
+        return BlogCategory.economic;
+      case 1: // Technology
+        return BlogCategory.tech;
+      case 2: // Entertainment
+        return BlogCategory.entertainment;
+      case 3: // Health
+        return BlogCategory.health;
+      default:
+        return BlogCategory.economic;
+    }
+  }
+
+  // Helper method to parse markdown and create TextSpan
+  TextSpan _parseMarkdownToTextSpan(String text, TextStyle baseStyle) {
+    final List<TextSpan> spans = [];
+    final RegExp boldRegex = RegExp(r'\*\*(.*?)\*\*');
+
+    int lastIndex = 0;
+    for (final Match match in boldRegex.allMatches(text)) {
+      // Add text before the bold part
+      if (match.start > lastIndex) {
+        spans.add(
+          TextSpan(
+            text: text.substring(lastIndex, match.start),
+            style: baseStyle,
+          ),
+        );
+      }
+
+      // Add the bold text
+      spans.add(
+        TextSpan(
+          text: match.group(1),
+          style: baseStyle.copyWith(fontWeight: FontWeight.bold),
+        ),
+      );
+
+      lastIndex = match.end;
+    }
+
+    // Add remaining text
+    if (lastIndex < text.length) {
+      spans.add(TextSpan(text: text.substring(lastIndex), style: baseStyle));
+    }
+
+    return TextSpan(children: spans);
+  }
+
   void _showCreatePostDialog() {
     final titleController = TextEditingController();
     final contentController = TextEditingController();
-    BlogCategory selectedCategory = BlogCategory.economic;
+    // Set default category based on current tab
+    BlogCategory selectedCategory = _getCategoryFromIndex(_selectedIndex);
     Uint8List? selectedImageBytes;
 
     showDialog(
@@ -1304,9 +1413,10 @@ class _BlogHomePageState extends State<BlogHomePage> {
                         const SizedBox(height: 8),
                         TextField(
                           controller: contentController,
-                          maxLines: 8,
+                          maxLines: 15, // Increased from 8 to 15 lines
                           decoration: InputDecoration(
-                            hintText: 'Enter post content',
+                            hintText:
+                                'Enter post content (use **text** for bold)',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
