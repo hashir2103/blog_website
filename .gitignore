@@ -45,3 +45,6 @@ app.*.map.json
 /android/app/release
 
 .env
+/build/web/
+ios/Runner/Assets.xcassets/*
+android/app/src/main/res/*

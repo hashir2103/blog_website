@@ -53,11 +53,11 @@ class BlogService {
       if (imageBytes != null) {
         final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
         final uploadResponse = await _client.storage
-            .from('BlogBucket')
+            .from('blog-images')
             .uploadBinary(fileName, imageBytes);
 
         if (uploadResponse.isNotEmpty) {
-          imageUrl = _client.storage.from('BlogBucket').getPublicUrl(fileName);
+          imageUrl = _client.storage.from('blog-images').getPublicUrl(fileName);
         }
       }
 
@@ -108,7 +108,7 @@ class BlogService {
             final fileName = urlParts.last;
 
             // Delete the old image from storage
-            await _client.storage.from('BlogBucket').remove([fileName]);
+            await _client.storage.from('blog-images').remove([fileName]);
             print('Old image deleted: $fileName');
           } catch (e) {
             print('Error deleting old image: $e');
@@ -119,11 +119,11 @@ class BlogService {
         // Upload new image
         final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
         final uploadResponse = await _client.storage
-            .from('BlogBucket')
+            .from('blog-images')
             .uploadBinary(fileName, newImageBytes);
 
         if (uploadResponse.isNotEmpty) {
-          imageUrl = _client.storage.from('BlogBucket').getPublicUrl(fileName);
+          imageUrl = _client.storage.from('blog-images').getPublicUrl(fileName);
         }
       }
 
@@ -150,27 +150,42 @@ class BlogService {
     }
   }
 
-  // Verify admin credentials
-  static Future<bool> verifyAdminCredentials(String id, String password) async {
+  // Admin login using Supabase Auth
+  static Future<bool> loginAdmin(String email, String password) async {
     try {
-      await _client
-          .from('creds')
-          .select('id, pass')
-          .eq('id', id)
-          .eq('pass', password)
-          .single();
-
+      await _client.auth.signInWithPassword(email: email, password: password);
+      print('Admin logged in successfully');
       return true;
     } catch (e) {
-      print('Error verifying admin credentials: $e');
+      print('Error logging in: $e');
       return false;
     }
+  }
+
+  // Admin logout
+  static Future<void> logoutAdmin() async {
+    try {
+      await _client.auth.signOut();
+      print('Admin logged out successfully');
+    } catch (e) {
+      print('Error logging out: $e');
+    }
+  }
+
+  // Check if user is authenticated
+  static bool isAuthenticated() {
+    return _client.auth.currentUser != null;
+  }
+
+  // Get current user email
+  static String? getCurrentUserEmail() {
+    return _client.auth.currentUser?.email;
   }
 
   // Delete an image from storage
   static Future<bool> deleteImageFromStorage(String fileName) async {
     try {
-      await _client.storage.from('BlogBucket').remove([fileName]);
+      await _client.storage.from('blog-images').remove([fileName]);
       return true;
     } catch (e) {
       print('Error deleting image from storage: $e');
