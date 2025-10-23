@@ -4,6 +4,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'dart:typed_data';
 import '../models/blog_post.dart';
 import '../services/blog_service.dart';
+import 'privacy_policy_page.dart';
+import 'contact_page.dart';
 
 class BlogHomePage extends StatefulWidget {
   const BlogHomePage({super.key});
@@ -59,6 +61,43 @@ class _BlogHomePageState extends State<BlogHomePage> {
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: false,
+        leading: PopupMenuButton<String>(
+          icon: const Icon(Icons.menu, color: Colors.white),
+          tooltip: 'Menu',
+          onSelected: (value) {
+            if (value == 'privacy') {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const PrivacyPolicyPage()),
+              );
+            } else if (value == 'contact') {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ContactPage()),
+              );
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 'privacy',
+              child: Row(
+                children: [
+                  Icon(Icons.privacy_tip, size: 20),
+                  SizedBox(width: 12),
+                  Text('Privacy Policy'),
+                ],
+              ),
+            ),
+            const PopupMenuItem(
+              value: 'contact',
+              child: Row(
+                children: [
+                  Icon(Icons.contact_mail, size: 20),
+                  SizedBox(width: 12),
+                  Text('Contact Us'),
+                ],
+              ),
+            ),
+          ],
+        ),
         title: LayoutBuilder(
           builder: (context, constraints) {
             final isMobile = MediaQuery.of(context).size.width < 600;
@@ -167,23 +206,34 @@ class _BlogHomePageState extends State<BlogHomePage> {
   }
 
   Widget _buildAdBanner() {
-    return Container(
-      height: 120,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.black, // Changed back to black as requested
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: const Center(
-        child: Text(
-          'Advertisement',
-          style: TextStyle(
-            color: Colors.white, // Changed back to white for black background
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = MediaQuery.of(context).size.width < 600;
+        // TODO: Replace with actual AdSense ad unit after site approval
+        // AdSense script is already added in web/index.html
+        return Container(
+          height: isMobile ? 80 : 120,
+          margin: EdgeInsets.symmetric(
+            horizontal: isMobile ? 12 : 16,
+            vertical: 8,
           ),
-        ),
-      ),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Colors.grey.shade300),
+          ),
+          child: Center(
+            child: Text(
+              'Advertisement Space',
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: isMobile ? 14 : 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -239,20 +289,20 @@ class _BlogHomePageState extends State<BlogHomePage> {
       builder: (context, constraints) {
         // Determine number of columns based on screen width
         int crossAxisCount;
-        double childAspectRatio;
+        double mainAxisExtent;
         
         if (constraints.maxWidth < 600) {
           // Mobile: 1 column
           crossAxisCount = 1;
-          childAspectRatio = 0.85;
+          mainAxisExtent = 500;
         } else if (constraints.maxWidth < 1000) {
-          // Tablet: 2 columns
+          // Tablet: 2 columns  
           crossAxisCount = 2;
-          childAspectRatio = 0.9;
+          mainAxisExtent = 580;
         } else {
           // Desktop: 3 columns
           crossAxisCount = 3;
-          childAspectRatio = 0.9;
+          mainAxisExtent = 600;
         }
         
         return Padding(
@@ -264,7 +314,7 @@ class _BlogHomePageState extends State<BlogHomePage> {
               crossAxisCount: crossAxisCount,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
-              childAspectRatio: childAspectRatio,
+              mainAxisExtent: mainAxisExtent,
             ),
             itemCount: filteredPosts.length,
             itemBuilder: (context, index) {
@@ -277,168 +327,179 @@ class _BlogHomePageState extends State<BlogHomePage> {
   }
 
   Widget _buildBlogPostCard(BlogPost post) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Stack(
-        // fit: StackFit.expand,
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.of(context)
-                  .push(
-                    MaterialPageRoute(
-                      builder: (context) => BlogPostDetailPage(
-                        post: post,
-                        currentTabIndex: _selectedIndex,
-                      ),
-                    ),
-                  )
-                  .then((returnedTabIndex) {
-                    // Update the selected tab if a different one was selected
-                    if (returnedTabIndex != null &&
-                        returnedTabIndex != _selectedIndex) {
-                      setState(() {
-                        _selectedIndex = returnedTabIndex;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = MediaQuery.of(context).size.width < 600;
+        final imageHeight = isMobile ? 200.0 : 300.0;
+        final titleFontSize = isMobile ? 16.0 : 18.0;
+        final contentFontSize = isMobile ? 13.0 : 14.0;
+        final cardPadding = isMobile ? 12.0 : 16.0;
+        
+        return Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Stack(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => BlogPostDetailPage(
+                            post: post,
+                            currentTabIndex: _selectedIndex,
+                          ),
+                        ),
+                      )
+                      .then((returnedTabIndex) {
+                        // Update the selected tab if a different one was selected
+                        if (returnedTabIndex != null &&
+                            returnedTabIndex != _selectedIndex) {
+                          setState(() {
+                            _selectedIndex = returnedTabIndex;
+                          });
+                        }
                       });
-                    }
-                  });
-            },
-            borderRadius: BorderRadius.circular(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Image
-                Container(
-                  height: 300,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                  ),
-                  child: post.imageUrl.isNotEmpty
-                      ? ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8),
-                          ),
-                          child: Image.network(
-                            post.imageUrl,
-                            width: double.infinity,
-                            height: double.infinity,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Center(
-                                child: Icon(
-                                  Icons.image,
-                                  size: 40,
-                                  color: Colors.grey,
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                      : const Center(
-                          child: Icon(
-                            Icons.image,
-                            size: 40,
-                            color: Colors.grey,
-                          ),
+                },
+                borderRadius: BorderRadius.circular(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Image
+                    Container(
+                      height: imageHeight,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
                         ),
-                ),
-
-                // Content
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Category Badge
-                      const SizedBox(height: 12),
-
-                      // Title
-                      Text(
-                        post.title,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black87,
-                          height: 1.3,
-                        ),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
                       ),
-
-                      const SizedBox(height: 8),
-
-                      // Content Preview
-                      RichText(
-                        text: _parseMarkdownToTextSpan(
-                          post.content,
-                          TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey.shade600,
-                            height: 1.4,
-                          ),
-                        ),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-
-                      const SizedBox(height: 12),
-
-                      // Publish Date
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.calendar_today,
-                            size: 14,
-                            color: Colors.grey.shade500,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            _formatDate(post.publishDate),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey.shade500,
-                              fontWeight: FontWeight.w500,
+                      child: post.imageUrl.isNotEmpty
+                          ? ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: Image.network(
+                                post.imageUrl,
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Center(
+                                    child: Icon(
+                                      Icons.image,
+                                      size: 40,
+                                      color: Colors.grey,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : const Center(
+                              child: Icon(
+                                Icons.image,
+                                size: 40,
+                                color: Colors.grey,
+                              ),
                             ),
+                    ),
+
+                    // Content
+                    Padding(
+                      padding: EdgeInsets.all(cardPadding),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Category Badge
+                          SizedBox(height: isMobile ? 8 : 12),
+
+                          // Title
+                          Text(
+                            post.title,
+                            style: TextStyle(
+                              fontSize: titleFontSize,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black87,
+                              height: 1.3,
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+
+                          const SizedBox(height: 8),
+
+                          // Content Preview
+                          RichText(
+                            text: _parseMarkdownToTextSpan(
+                              post.content,
+                              TextStyle(
+                                fontSize: contentFontSize,
+                                color: Colors.grey.shade600,
+                                height: 1.4,
+                              ),
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          // Publish Date
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                size: isMobile ? 12 : 14,
+                                color: Colors.grey.shade500,
+                              ),
+                              const SizedBox(width: 6),
+                              Flexible(
+                                child: Text(
+                                  _formatDate(post.publishDate),
+                                  style: TextStyle(
+                                    fontSize: isMobile ? 11 : 12,
+                                    color: Colors.grey.shade500,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                // const Spacer(),
-              ],
-            ),
-          ),
-          if (_isEditMode)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.7),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: IconButton(
-                  onPressed: () => _showEditDialog(post),
-                  icon: const Icon(Icons.edit, color: Colors.white, size: 20),
-                  constraints: const BoxConstraints(
-                    minWidth: 40,
-                    minHeight: 40,
-                  ),
-                  padding: EdgeInsets.zero,
+                    ),
+                  ],
                 ),
               ),
-            ),
-        ],
-      ),
+              if (_isEditMode)
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.7),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: IconButton(
+                      onPressed: () => _showEditDialog(post),
+                      icon: const Icon(Icons.edit, color: Colors.white, size: 20),
+                      constraints: const BoxConstraints(
+                        minWidth: 40,
+                        minHeight: 40,
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -1501,7 +1562,7 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
           ? CustomScrollView(
               slivers: [
                 SliverPadding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(MediaQuery.of(context).size.width < 600 ? 12 : 16),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
                       // Image and Ad Layout (Responsive)
@@ -1686,88 +1747,105 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
                         ),
 
                       // Title
-                      Text(
-                        widget.post.title,
-                        style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final isMobile = MediaQuery.of(context).size.width < 600;
+                          return Text(
+                            widget.post.title,
+                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                               fontWeight: FontWeight.w800,
                               color: Colors.black,
                               height: 1.2,
+                              fontSize: isMobile ? 24 : 28,
                               letterSpacing: -0.5,
                             ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 20),
 
                       // Publish Date
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.calendar_today,
-                            size: 18,
-                            color: Colors.grey.shade600,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Published on ${_formatDate(widget.post.publishDate)}',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w500,
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final isMobile = MediaQuery.of(context).size.width < 600;
+                          return Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                size: isMobile ? 16 : 18,
+                                color: Colors.grey.shade600,
+                              ),
+                              const SizedBox(width: 8),
+                              Flexible(
+                                child: Text(
+                                  'Published on ${_formatDate(widget.post.publishDate)}',
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Colors.grey.shade600,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: isMobile ? 13 : 14,
+                                  ),
                                 ),
-                          ),
-                        ],
+                              ),
+                            ],
+                          );
+                        },
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(height: MediaQuery.of(context).size.width < 600 ? 24 : 32),
 
                       // Content
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.grey.shade200,
-                            width: 1,
-                          ),
-                        ),
-                        child: MarkdownBody(
-                          data: widget.post.content,
-                          styleSheet: MarkdownStyleSheet(
-                            p: TextStyle(
-                              color: Colors.black87,
-                              height: 1.8,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 0.3,
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final isMobile = MediaQuery.of(context).size.width < 600;
+                          return Container(
+                            padding: EdgeInsets.all(isMobile ? 16 : 20),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.grey.shade200,
+                                width: 1,
+                              ),
                             ),
-                            strong: TextStyle(
-                              color: Colors.black87,
-                              height: 1.8,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.3,
+                            child: MarkdownBody(
+                              data: widget.post.content,
+                              styleSheet: MarkdownStyleSheet(
+                                p: TextStyle(
+                                  color: Colors.black87,
+                                  height: 1.8,
+                                  fontSize: isMobile ? 15 : 16,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.3,
+                                ),
+                                strong: TextStyle(
+                                  color: Colors.black87,
+                                  height: 1.8,
+                                  fontSize: isMobile ? 15 : 16,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.3,
+                                ),
+                                h1: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: isMobile ? 22 : 24,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.3,
+                                ),
+                                h2: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: isMobile ? 19 : 20,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.3,
+                                ),
+                                h3: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: isMobile ? 17 : 18,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.3,
+                                ),
+                              ),
+                              selectable: true,
                             ),
-                            h1: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              height: 1.3,
-                            ),
-                            h2: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              height: 1.3,
-                            ),
-                            h3: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              height: 1.3,
-                            ),
-                          ),
-                          selectable: true,
-                        ),
+                          );
+                        },
                       ),
                     ]),
                   ),

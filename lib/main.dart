@@ -5,7 +5,19 @@ import 'screen/blog_home_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SupabaseConfig.initialize();
+
+  // Add global error handler to prevent crashes in production
+  FlutterError.onError = (FlutterErrorDetails details) {
+    print('Flutter Error: ${details.exception}');
+    // In production, this logs errors without showing them to users
+  };
+
+  try {
+    await SupabaseConfig.initialize();
+  } catch (e) {
+    print('Supabase initialization error: $e');
+    // Continue app even if Supabase fails
+  }
 
   runApp(const MainApp());
 }
