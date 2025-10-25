@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://hbtinsights.com/</loc>
+    <lastmod>2025-10-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Note: Privacy Policy and Contact pages are client-side routes in Flutter SPA -->
+  <!-- Search engines will index them through the main page -->
+  <!-- If you want separate URLs for these pages in the future, you'll need to implement -->
+  <!-- proper routing with real URLs (not hash-based routing) -->
+
+</urlset>
+
