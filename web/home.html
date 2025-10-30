@@ -1,0 +1,375 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HBTinsights - Your source for in-depth analysis and insights on economics, technology, entertainment, and health. Stay informed with expert articles, breaking news, and comprehensive coverage of the topics that matter most.">
+  <meta name="keywords" content="economics news, technology insights, entertainment news, health articles, business analysis, tech trends, global economy, digital health">
+  <meta name="author" content="HBTinsights">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="HBTinsights - Economics, Technology, Entertainment & Health News">
+  <meta property="og:description" content="Expert analysis and insights on economics, technology, entertainment, and health. Stay informed with quality journalism and in-depth coverage.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hbtinsights.com/home.html">
+  <meta property="og:site_name" content="HBTinsights">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HBTinsights - Economics, Technology, Entertainment & Health News">
+  <meta name="twitter:description" content="Expert analysis and insights on economics, technology, entertainment, and health.">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://hbtinsights.com/home.html">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="language" content="English">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  
+  <!-- Structured Data - Organization Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsMediaOrganization",
+    "name": "HBTinsights",
+    "url": "https://hbtinsights.com",
+    "logo": "https://hbtinsights.com/icons/Icon-192.png",
+    "description": "HBTinsights provides comprehensive analysis and insights on economics, technology, entertainment, and health.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hashirtahir2103@gmail.com",
+      "contactType": "Customer Service"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "HBTinsights",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://hbtinsights.com/icons/Icon-192.png"
+      }
+    }
+  }
+  </script>
+  
+  <!-- Structured Data - WebSite Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "HBTinsights",
+    "url": "https://hbtinsights.com",
+    "description": "Your source for in-depth analysis and insights on economics, technology, entertainment, and health.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://hbtinsights.com/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  
+  <title>HBTinsights - Economics, Technology, Entertainment & Health News</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      line-height: 1.6;
+      color: #374151;
+      background-color: #ffffff;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 20px 0;
+      margin-bottom: 40px;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .logo {
+      background-color: #dc2626;
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+    }
+    
+    nav { display:flex; gap: 16px; flex-wrap: wrap; }
+    nav a { color:#ffffff; text-decoration:none; font-weight:500; transition: color 0.3s; }
+    
+    nav a:hover {
+      color: #dc2626;
+    }
+    
+    h1 {
+      color: #dc2626;
+      font-size: 36px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    
+    h2 {
+      color: #1f2937;
+      font-size: 28px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      border-bottom: 3px solid #dc2626;
+      padding-bottom: 10px;
+    }
+    
+    h3 {
+      color: #dc2626;
+      font-size: 22px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .intro {
+      font-size: 18px;
+      color: #4b5563;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      padding: 20px;
+      background-color: #f9fafb;
+      border-radius: 8px;
+      border-left: 4px solid #dc2626;
+    }
+    
+    .category-section {
+      margin-bottom: 50px;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .category-section p {
+      font-size: 16px;
+      color: #4b5563;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+    
+    .category-section ul {
+      margin-left: 20px;
+      margin-top: 15px;
+    }
+    
+    .category-section li {
+      margin-bottom: 10px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+    
+    .content-highlight {
+      background-color: #f3f4f6;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 4px solid #dc2626;
+    }
+    
+    .content-highlight p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #374151;
+      margin: 0;
+    }
+    
+    footer {
+      background-color: #1f2937;
+      color: #ffffff;
+      padding: 40px 20px;
+      margin-top: 60px;
+      text-align: center;
+    }
+    
+    footer a {
+      color: #dc2626;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    
+    footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .footer-links {
+      margin-bottom: 20px;
+    }
+    
+    .meta-info {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+      
+      .category-section {
+        padding: 20px;
+      }
+      
+      nav {
+        gap: 15px;
+        font-size: 14px;
+      }
+    }
+  </style>
+  
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1059342231343027"
+       crossorigin="anonymous"></script>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EX8SG16XW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9EX8SG16XW');
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div style="display:flex; align-items:center; flex-wrap:wrap;">
+        <a href="/home.html" class="logo">HBTinsights</a>
+        <nav style="margin-left:16px;">
+          <a href="/home.html">Home</a>
+          <a href="/categories/economic.html">Economics</a>
+          <a href="/categories/tech.html">Technology</a>
+          <a href="/categories/entertainment.html">Entertainment</a>
+          <a href="/categories/health.html">Health</a>
+        </nav>
+      </div>
+      <nav>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="container">
+    <h1>Welcome to HBTinsights</h1>
+    
+    <div class="intro">
+      <p><strong>HBTinsights</strong> is your trusted source for comprehensive news and analysis covering economics, technology, entertainment, and health. We deliver in-depth articles, expert insights, and breaking news to keep you informed about the topics that matter most in today's world.</p>
+      <p>Our mission is to provide high-quality journalism with expert analysis and insights to help you understand complex issues and stay ahead of current trends.</p>
+    </div>
+    
+    <h2>Our Content Categories</h2>
+    
+    <div class="category-section">
+      <h3>📊 Economics</h3>
+      <p>Stay updated with the latest economic trends, market analysis, financial insights, and business developments shaping the global economy. Our expert analysis helps you understand complex economic issues, policy changes, market movements, and their impact on businesses and individuals.</p>
+      <div class="content-highlight">
+        <p>We cover topics including macroeconomic trends, financial markets, economic policy, business strategy, international trade, economic indicators, market analysis, and investment insights. Our economics section provides comprehensive coverage of how economic forces shape the world around us.</p>
+      </div>
+      <p>Whether you're interested in understanding inflation, unemployment, GDP growth, or international economics, our articles break down complex concepts into accessible insights.</p>
+      <p style="margin-top:12px;"><a href="/categories/economic.html" style="color:#dc2626; text-decoration:underline;">View Economics articles →</a></p>
+    </div>
+    
+    <div class="category-section">
+      <h3>💻 Technology</h3>
+      <p>Discover the latest in tech innovation, software development, artificial intelligence, cybersecurity, and digital transformation. We cover emerging technologies and their impact on society, businesses, and everyday life.</p>
+      <div class="content-highlight">
+        <p>Our technology coverage includes software development trends, AI and machine learning breakthroughs, cybersecurity threats and solutions, cloud computing, blockchain technology, mobile app development, web technologies, and the latest gadgets and devices.</p>
+      </div>
+      <p>From startup innovations to enterprise solutions, we examine how technology is reshaping industries and changing the way we work, communicate, and live.</p>
+      <p style="margin-top:12px;"><a href="/categories/tech.html" style="color:#dc2626; text-decoration:underline;">View Technology articles →</a></p>
+    </div>
+    
+    <div class="category-section">
+      <h3>🎬 Entertainment</h3>
+      <p>Get the latest entertainment news, movie reviews, celebrity updates, music trends, and pop culture insights. Your go-to source for everything happening in the world of entertainment, from Hollywood to streaming platforms.</p>
+      <div class="content-highlight">
+        <p>We cover movies and film reviews, TV shows and streaming content, music releases and concerts, celebrity news and interviews, entertainment industry trends, gaming news, book releases, and cultural events.</p>
+      </div>
+      <p>Whether you're a film buff, music lover, or pop culture enthusiast, our entertainment section keeps you informed about what's trending and what's worth your attention.</p>
+      <p style="margin-top:12px;"><a href="/categories/entertainment.html" style="color:#dc2626; text-decoration:underline;">View Entertainment articles →</a></p>
+    </div>
+    
+    <div class="category-section">
+      <h3>🏥 Health</h3>
+      <p>Access reliable health information, wellness tips, medical breakthroughs, and expert advice on living a healthier life. We provide evidence-based health content you can trust, covering physical health, mental wellness, nutrition, fitness, and medical science.</p>
+      <div class="content-highlight">
+        <p>Our health section includes articles on nutrition and diet, exercise and fitness, mental health and wellness, medical research and breakthroughs, preventive care, chronic disease management, healthy lifestyle tips, and public health topics.</p>
+      </div>
+      <p>From understanding nutrition science to learning about the latest medical advances, our health articles empower you to make informed decisions about your wellbeing.</p>
+      <p style="margin-top:12px;"><a href="/categories/health.html" style="color:#dc2626; text-decoration:underline;">View Health articles →</a></p>
+    </div>
+    
+    <div class="content-highlight" style="margin-top: 50px;">
+      <p><strong>Why Choose HBTinsights?</strong></p>
+      <ul style="margin-top: 15px; padding-left: 20px;">
+        <li>Expert insights from knowledgeable writers and researchers</li>
+        <li>Up-to-date coverage of breaking news and current events</li>
+        <li>Multiple categories ensuring diverse content for every interest</li>
+        <li>Regular updates with fresh articles published frequently</li>
+        <li>Quality journalism you can trust</li>
+      </ul>
+    </div>
+    
+    <div class="meta-info">
+      <p><strong>About Our Content:</strong> All articles are carefully researched and written by our team of experienced writers. We strive to provide accurate, up-to-date information that helps readers understand complex topics and make informed decisions.</p>
+      <p style="margin-top: 10px;">For the best browsing experience with our interactive Flutter application, please visit our <a href="/">main website</a>. This static page provides an overview of our content that search engines can easily discover and index.</p>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="footer-links">
+      <a href="/home.html">Home</a>
+      <a href="/about.html">About Us</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy Policy</a>
+    </div>
+    <p>&copy; 2024 HBTinsights. All rights reserved.</p>
+    <p style="margin-top: 10px; font-size: 14px; color: #9ca3af;">Email: hashirtahir2103@gmail.com</p>
+  </footer>
+</body>
+</html>
+

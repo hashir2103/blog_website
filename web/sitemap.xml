@@ -2,21 +2,189 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   
   <!-- Homepage -->
   <url>
     <loc>https://hbtinsights.com/</loc>
-    <lastmod>2025-10-24</lastmod>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Note: Privacy Policy and Contact pages are client-side routes in Flutter SPA -->
-  <!-- Search engines will index them through the main page -->
-  <!-- If you want separate URLs for these pages in the future, you'll need to implement -->
-  <!-- proper routing with real URLs (not hash-based routing) -->
-
+  <!-- Static Pages -->
+  <url>
+    <loc>https://hbtinsights.com/home.html</loc>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/about.html</loc>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/contact.html</loc>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/privacy.html</loc>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Category Pages -->
+  <url>
+    <loc>https://hbtinsights.com/categories/economic.html</loc>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/categories/tech.html</loc>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/categories/entertainment.html</loc>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/categories/health.html</loc>
+    <lastmod>2025-10-30T13:43:20.675Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://hbtinsights.com/posts/c893ba9f-dfa6-402b-8106-a8cb3bff7f6a.html</loc>
+    <lastmod>2025-10-24T01:59:04.297818+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/3417dc6d-e446-41d3-8108-804963a3bcc9.html</loc>
+    <lastmod>2025-10-23T15:17:53.540595+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/c02ae2dc-5df3-4492-af1a-979ef34b20bf.html</loc>
+    <lastmod>2025-10-23T02:19:35.286328+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/7b664659-ee52-4cae-ad0d-cba4c67b736b.html</loc>
+    <lastmod>2025-10-23T02:16:50.508439+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/00f0ee73-9d1b-477f-b6c5-e7575261fd91.html</loc>
+    <lastmod>2025-10-23T02:12:17.017132+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/cc0377c4-d4b5-4304-85e3-995acc12de13.html</loc>
+    <lastmod>2025-10-23T15:10:11.379037+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/cbd915db-9402-491f-8ce2-d39e8e4b4ee4.html</loc>
+    <lastmod>2025-10-23T14:42:22.045553+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/61c21ffb-42e8-41a8-9c75-00b597df757c.html</loc>
+    <lastmod>2025-10-23T14:41:32.41371+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/57b7d2bf-9ee3-478e-888d-4f5b2b62c6f6.html</loc>
+    <lastmod>2025-10-23T14:40:04.648135+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/e40a2867-9cc7-4ac4-855b-81c42c59e1ba.html</loc>
+    <lastmod>2025-10-23T14:43:33.774777+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/8c1fb212-eb95-47d4-89af-0886def143dc.html</loc>
+    <lastmod>2025-10-23T14:42:06.674628+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/7425b39c-7a7d-41d6-8e74-3cbaa4f8c377.html</loc>
+    <lastmod>2025-10-23T14:41:08.124532+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/54fbadd7-581f-4d2a-95d0-f76a23f0514a.html</loc>
+    <lastmod>2025-10-23T14:39:50.262893+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/fa476da5-9f45-498f-ba0b-d7bdca3d861d.html</loc>
+    <lastmod>2025-10-23T14:43:07.160168+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/45f07d21-70df-4916-9f5a-d98e91cb4ecd.html</loc>
+    <lastmod>2025-10-23T14:41:54.182224+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/6cfa2db7-14ed-4c5c-8d01-12125202b5b2.html</loc>
+    <lastmod>2025-10-23T14:40:55.877211+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/39ed65a2-e046-4e2d-89ff-e0c823b675cd.html</loc>
+    <lastmod>2025-10-23T14:39:03.304623+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/b335a5e7-2315-4f2b-a97f-5f84b09fd9f5.html</loc>
+    <lastmod>2025-10-23T14:39:29.534302+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/b33ef77c-e0b7-41eb-b294-ab1b53db4bf4.html</loc>
+    <lastmod>2025-10-23T14:42:49.052758+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hbtinsights.com/posts/5056aa50-b8e9-4947-8d5e-ba7fb1cca20a.html</loc>
+    <lastmod>2025-10-23T14:38:25.01546+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
 </urlset>
-
