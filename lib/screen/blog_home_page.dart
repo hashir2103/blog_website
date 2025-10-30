@@ -61,43 +61,7 @@ class _BlogHomePageState extends State<BlogHomePage> {
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: false,
-        leading: PopupMenuButton<String>(
-          icon: const Icon(Icons.menu, color: Colors.white),
-          tooltip: 'Menu',
-          onSelected: (value) {
-            if (value == 'privacy') {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const PrivacyPolicyPage()),
-              );
-            } else if (value == 'contact') {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ContactPage()),
-              );
-            }
-          },
-          itemBuilder: (context) => [
-            const PopupMenuItem(
-              value: 'privacy',
-              child: Row(
-                children: [
-                  Icon(Icons.privacy_tip, size: 20),
-                  SizedBox(width: 12),
-                  Text('Privacy Policy'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'contact',
-              child: Row(
-                children: [
-                  Icon(Icons.contact_mail, size: 20),
-                  SizedBox(width: 12),
-                  Text('Contact Us'),
-                ],
-              ),
-            ),
-          ],
-        ),
+        automaticallyImplyLeading: false,
         title: LayoutBuilder(
           builder: (context, constraints) {
             final isMobile = MediaQuery.of(context).size.width < 600;
@@ -128,11 +92,23 @@ class _BlogHomePageState extends State<BlogHomePage> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        _buildTabButton(isMobile ? 'Econ' : 'Economics', 0, isMobile),
+                        _buildTabButton(
+                          isMobile ? 'Econ' : 'Economics',
+                          0,
+                          isMobile,
+                        ),
                         SizedBox(width: isMobile ? 8 : 16),
-                        _buildTabButton(isMobile ? 'Tech' : 'Technology', 1, isMobile),
+                        _buildTabButton(
+                          isMobile ? 'Tech' : 'Technology',
+                          1,
+                          isMobile,
+                        ),
                         SizedBox(width: isMobile ? 8 : 16),
-                        _buildTabButton(isMobile ? 'Ent' : 'Entertainment', 2, isMobile),
+                        _buildTabButton(
+                          isMobile ? 'Ent' : 'Entertainment',
+                          2,
+                          isMobile,
+                        ),
                         SizedBox(width: isMobile ? 8 : 16),
                         _buildTabButton('Health', 3, isMobile),
                       ],
@@ -183,17 +159,27 @@ class _BlogHomePageState extends State<BlogHomePage> {
         ],
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
+          ? Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // AdSense Banner Section
-                  _buildAdBanner(),
-
-                  // Blog Posts Grid Section
-                  _buildBlogPostsGrid(),
+                  const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Loading articles...',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               ),
+            )
+          : SingleChildScrollView(
+              child: Column(children: [_buildBlogPostsGrid(), _buildFooter()]),
             ),
       floatingActionButton: _isEditMode && _isAdminAuthenticated
           ? FloatingActionButton(
@@ -202,38 +188,6 @@ class _BlogHomePageState extends State<BlogHomePage> {
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-    );
-  }
-
-  Widget _buildAdBanner() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isMobile = MediaQuery.of(context).size.width < 600;
-        // TODO: Replace with actual AdSense ad unit after site approval
-        // AdSense script is already added in web/index.html
-        return Container(
-          height: isMobile ? 80 : 120,
-          margin: EdgeInsets.symmetric(
-            horizontal: isMobile ? 12 : 16,
-            vertical: 8,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: Colors.grey.shade300),
-          ),
-          child: Center(
-            child: Text(
-              'Advertisement Space',
-              style: TextStyle(
-                color: Colors.grey.shade600,
-                fontSize: isMobile ? 14 : 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 
@@ -270,17 +224,209 @@ class _BlogHomePageState extends State<BlogHomePage> {
     );
   }
 
+  Widget _buildFooter() {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 40),
+      padding: EdgeInsets.symmetric(
+        vertical: isMobile ? 30 : 40,
+        horizontal: isMobile ? 20 : 40,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade900,
+        border: Border(top: BorderSide(color: Colors.grey.shade800, width: 1)),
+      ),
+      child: Column(
+        children: [
+          // Logo/Brand
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              'HBTinsights',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: isMobile ? 18 : 20,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          // Tagline
+          Text(
+            'Your source for Economics, Technology, Entertainment & Health insights',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.grey.shade400,
+              fontSize: isMobile ? 13 : 14,
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Footer Links
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: isMobile ? 16 : 24,
+            runSpacing: 12,
+            children: [
+              _buildFooterLink(
+                icon: Icons.privacy_tip_outlined,
+                text: 'Privacy Policy',
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyPage(),
+                    ),
+                  );
+                },
+                isMobile: isMobile,
+              ),
+              _buildFooterLink(
+                icon: Icons.contact_mail_outlined,
+                text: 'Contact Us',
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ContactPage(),
+                    ),
+                  );
+                },
+                isMobile: isMobile,
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 24),
+
+          // Divider
+          Container(
+            height: 1,
+            width: isMobile ? double.infinity : 300,
+            color: Colors.grey.shade800,
+          ),
+
+          const SizedBox(height: 20),
+
+          // Copyright
+          Text(
+            '© ${DateTime.now().year} HBTinsights. All rights reserved.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.grey.shade600,
+              fontSize: isMobile ? 12 : 13,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFooterLink({
+    required IconData icon,
+    required String text,
+    required VoidCallback onTap,
+    required bool isMobile,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: isMobile ? 16 : 18, color: Colors.grey.shade400),
+            const SizedBox(width: 6),
+            Text(
+              text,
+              style: TextStyle(
+                color: Colors.grey.shade300,
+                fontSize: isMobile ? 13 : 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildBlogPostsGrid() {
     final filteredPosts = _getFilteredPosts(_posts);
 
     if (filteredPosts.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.all(32.0),
-        child: Center(
-          child: Text(
-            'No posts found for this category',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
+      return Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.article_outlined, size: 64, color: Colors.grey.shade300),
+            const SizedBox(height: 16),
+            Text(
+              'No posts found for this category',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey.shade700,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Check back soon for new content in this category',
+              style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 40),
+            // Add helpful information
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.fiber_new,
+                        size: 20,
+                        color: Colors.grey.shade400,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Browse other categories for more content',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.update, size: 20, color: Colors.grey.shade400),
+                      const SizedBox(width: 8),
+                      Text(
+                        'New articles are added regularly',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       );
     }
@@ -290,13 +436,13 @@ class _BlogHomePageState extends State<BlogHomePage> {
         // Determine number of columns based on screen width
         int crossAxisCount;
         double mainAxisExtent;
-        
+
         if (constraints.maxWidth < 600) {
           // Mobile: 1 column
           crossAxisCount = 1;
           mainAxisExtent = 500;
         } else if (constraints.maxWidth < 1000) {
-          // Tablet: 2 columns  
+          // Tablet: 2 columns
           crossAxisCount = 2;
           mainAxisExtent = 580;
         } else {
@@ -304,7 +450,7 @@ class _BlogHomePageState extends State<BlogHomePage> {
           crossAxisCount = 3;
           mainAxisExtent = 600;
         }
-        
+
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: GridView.builder(
@@ -334,7 +480,7 @@ class _BlogHomePageState extends State<BlogHomePage> {
         final titleFontSize = isMobile ? 16.0 : 18.0;
         final contentFontSize = isMobile ? 13.0 : 14.0;
         final cardPadding = isMobile ? 12.0 : 16.0;
-        
+
         return Card(
           elevation: 2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -487,7 +633,11 @@ class _BlogHomePageState extends State<BlogHomePage> {
                     ),
                     child: IconButton(
                       onPressed: () => _showEditDialog(post),
-                      icon: const Icon(Icons.edit, color: Colors.white, size: 20),
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                       constraints: const BoxConstraints(
                         minWidth: 40,
                         minHeight: 40,
@@ -536,8 +686,8 @@ class _BlogHomePageState extends State<BlogHomePage> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
-            width: MediaQuery.of(context).size.width > 600 
-                ? MediaQuery.of(context).size.width * 0.4 
+            width: MediaQuery.of(context).size.width > 600
+                ? MediaQuery.of(context).size.width * 0.4
                 : MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.all(24),
             child: Column(
@@ -627,11 +777,10 @@ class _BlogHomePageState extends State<BlogHomePage> {
                               _isLoading = true;
                             });
 
-                            final isValid =
-                                await BlogService.loginAdmin(
-                                  idController.text.trim(),
-                                  passwordController.text.trim(),
-                                );
+                            final isValid = await BlogService.loginAdmin(
+                              idController.text.trim(),
+                              passwordController.text.trim(),
+                            );
 
                             setDialogState(() {
                               _isLoading = false;
@@ -714,11 +863,13 @@ class _BlogHomePageState extends State<BlogHomePage> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
-            width: MediaQuery.of(context).size.width > 600 
+            width: MediaQuery.of(context).size.width > 600
                 ? MediaQuery.of(context).size.width * 0.7
                 : MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.85,
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width > 600 ? 24 : 16),
+            padding: EdgeInsets.all(
+              MediaQuery.of(context).size.width > 600 ? 24 : 16,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1201,11 +1352,13 @@ class _BlogHomePageState extends State<BlogHomePage> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
-            width: MediaQuery.of(context).size.width > 600 
+            width: MediaQuery.of(context).size.width > 600
                 ? MediaQuery.of(context).size.width * 0.7
                 : MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.85,
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width > 600 ? 24 : 16),
+            padding: EdgeInsets.all(
+              MediaQuery.of(context).size.width > 600 ? 24 : 16,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1486,21 +1639,6 @@ class BlogPostDetailPage extends StatefulWidget {
 }
 
 class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
-  bool _isContentLoaded = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Load content after initial render
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        setState(() {
-          _isContentLoaded = true;
-        });
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1542,11 +1680,23 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        _buildTabButton(isMobile ? 'Econ' : 'Economics', 0, isMobile),
+                        _buildTabButton(
+                          isMobile ? 'Econ' : 'Economics',
+                          0,
+                          isMobile,
+                        ),
                         SizedBox(width: isMobile ? 8 : 16),
-                        _buildTabButton(isMobile ? 'Tech' : 'Technology', 1, isMobile),
+                        _buildTabButton(
+                          isMobile ? 'Tech' : 'Technology',
+                          1,
+                          isMobile,
+                        ),
                         SizedBox(width: isMobile ? 8 : 16),
-                        _buildTabButton(isMobile ? 'Ent' : 'Entertainment', 2, isMobile),
+                        _buildTabButton(
+                          isMobile ? 'Ent' : 'Entertainment',
+                          2,
+                          isMobile,
+                        ),
                         SizedBox(width: isMobile ? 8 : 16),
                         _buildTabButton('Health', 3, isMobile),
                       ],
@@ -1558,305 +1708,254 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
           },
         ),
       ),
-      body: _isContentLoaded
-          ? CustomScrollView(
-              slivers: [
-                SliverPadding(
-                  padding: EdgeInsets.all(MediaQuery.of(context).size.width < 600 ? 12 : 16),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate([
-                      // Image and Ad Layout (Responsive)
-                      if (widget.post.imageUrl.isNotEmpty)
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            final isMobile = MediaQuery.of(context).size.width < 800;
-                            
-                            if (isMobile) {
-                              // Mobile: Stack vertically
-                              return Column(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    margin: const EdgeInsets.only(bottom: 16),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.15),
-                                          blurRadius: 12,
-                                          offset: const Offset(0, 6),
-                                        ),
-                                      ],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(16),
-                                      child: Image.network(
-                                        widget.post.imageUrl,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                        loadingBuilder: (context, child, loadingProgress) {
-                                          if (loadingProgress == null) return child;
-                                          return Container(
-                                            height: 250,
-                                            color: Colors.grey.shade200,
-                                            child: const Center(
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        errorBuilder: (context, error, stackTrace) {
-                                          return Container(
-                                            height: 250,
-                                            color: Colors.grey.shade300,
-                                            child: const Center(
-                                              child: Icon(Icons.image, size: 60, color: Colors.grey),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 150,
-                                    margin: const EdgeInsets.only(bottom: 32),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: Colors.grey.shade300,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.ads_click, size: 32, color: Colors.grey.shade600),
-                                        const SizedBox(height: 8),
-                                        Text(
-                                          'Advertisement',
-                                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey.shade700,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: EdgeInsets.all(
+              MediaQuery.of(context).size.width < 600 ? 12 : 16,
+            ),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                // Image and Ad Layout (Responsive)
+                if (widget.post.imageUrl.isNotEmpty)
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isMobile = MediaQuery.of(context).size.width < 800;
+
+                      if (isMobile) {
+                        // Mobile: Stack vertically
+                        return Column(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              margin: const EdgeInsets.only(bottom: 16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.15),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 6),
                                   ),
                                 ],
-                              );
-                            } else {
-                              // Desktop: Side by side
-                              return Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.only(bottom: 32),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        height: 400,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(16),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black.withValues(alpha: 0.15),
-                                              blurRadius: 12,
-                                              offset: const Offset(0, 6),
-                                            ),
-                                          ],
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(16),
-                                          child: Image.network(
-                                            widget.post.imageUrl,
-                                            width: double.infinity,
-                                            height: 400,
-                                            fit: BoxFit.cover,
-                                            loadingBuilder: (context, child, loadingProgress) {
-                                              if (loadingProgress == null) return child;
-                                              return Container(
-                                                height: 400,
-                                                color: Colors.grey.shade200,
-                                                child: const Center(
-                                                  child: CircularProgressIndicator(
-                                                    strokeWidth: 2,
-                                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.network(
+                                  widget.post.imageUrl,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return Container(
+                                          height: 250,
+                                          color: Colors.grey.shade200,
+                                          child: const Center(
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                    Colors.grey,
                                                   ),
-                                                ),
-                                              );
-                                            },
-                                            errorBuilder: (context, error, stackTrace) {
-                                              return Container(
-                                                height: 400,
-                                                color: Colors.grey.shade300,
-                                                child: const Center(
-                                                  child: Icon(Icons.image, size: 60, color: Colors.grey),
-                                                ),
-                                              );
-                                            },
+                                            ),
                                           ),
+                                        );
+                                      },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      height: 250,
+                                      color: Colors.grey.shade300,
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.image,
+                                          size: 60,
+                                          color: Colors.grey,
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        height: 400,
-                                        margin: const EdgeInsets.only(left: 16),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade100,
-                                          borderRadius: BorderRadius.circular(12),
-                                          border: Border.all(
-                                            color: Colors.grey.shade300,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.ads_click, size: 32, color: Colors.grey.shade600),
-                                            const SizedBox(height: 8),
-                                            Text(
-                                              'Advertisement',
-                                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.grey.shade700,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 4),
-                                            Text(
-                                              '300x400',
-                                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                color: Colors.grey.shade500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 ),
-                              );
-                            }
-                          },
-                        ),
-
-                      // Title
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          final isMobile = MediaQuery.of(context).size.width < 600;
-                          return Text(
-                            widget.post.title,
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              fontWeight: FontWeight.w800,
-                              color: Colors.black,
-                              height: 1.2,
-                              fontSize: isMobile ? 24 : 28,
-                              letterSpacing: -0.5,
+                              ),
                             ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Publish Date
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          final isMobile = MediaQuery.of(context).size.width < 600;
-                          return Row(
-                            children: [
-                              Icon(
-                                Icons.calendar_today,
-                                size: isMobile ? 16 : 18,
-                                color: Colors.grey.shade600,
-                              ),
-                              const SizedBox(width: 8),
-                              Flexible(
-                                child: Text(
-                                  'Published on ${_formatDate(widget.post.publishDate)}',
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: Colors.grey.shade600,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: isMobile ? 13 : 14,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.width < 600 ? 24 : 32),
-
-                      // Content
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          final isMobile = MediaQuery.of(context).size.width < 600;
-                          return Container(
-                            padding: EdgeInsets.all(isMobile ? 16 : 20),
+                          ],
+                        );
+                      } else {
+                        // Desktop: Original size image, left-aligned
+                        return Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 32),
+                            constraints: const BoxConstraints(
+                              maxWidth: 800, // Maximum width
+                              maxHeight: 500, // Maximum height
+                            ),
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade50,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.grey.shade200,
-                                width: 1,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.15),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.network(
+                                widget.post.imageUrl,
+                                fit: BoxFit.contain, // Maintain aspect ratio
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Container(
+                                        width: 800,
+                                        height: 400,
+                                        color: Colors.grey.shade200,
+                                        child: const Center(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                  Colors.grey,
+                                                ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    width: 800,
+                                    height: 400,
+                                    color: Colors.grey.shade300,
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.image,
+                                        size: 60,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
-                            child: MarkdownBody(
-                              data: widget.post.content,
-                              styleSheet: MarkdownStyleSheet(
-                                p: TextStyle(
-                                  color: Colors.black87,
-                                  height: 1.8,
-                                  fontSize: isMobile ? 15 : 16,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: 0.3,
-                                ),
-                                strong: TextStyle(
-                                  color: Colors.black87,
-                                  height: 1.8,
-                                  fontSize: isMobile ? 15 : 16,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.3,
-                                ),
-                                h1: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: isMobile ? 22 : 24,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.3,
-                                ),
-                                h2: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: isMobile ? 19 : 20,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.3,
-                                ),
-                                h3: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: isMobile ? 17 : 18,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.3,
-                                ),
-                              ),
-                              selectable: true,
-                            ),
-                          );
-                        },
-                      ),
-                    ]),
+                          ),
+                        );
+                      }
+                    },
                   ),
+
+                // Title
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isMobile = MediaQuery.of(context).size.width < 600;
+                    return Text(
+                      widget.post.title,
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: Colors.black,
+                            height: 1.2,
+                            fontSize: isMobile ? 24 : 28,
+                            letterSpacing: -0.5,
+                          ),
+                    );
+                  },
                 ),
-              ],
-            )
-          : const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-              ),
+                const SizedBox(height: 20),
+
+                // Publish Date
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isMobile = MediaQuery.of(context).size.width < 600;
+                    return Row(
+                      children: [
+                        Icon(
+                          Icons.calendar_today,
+                          size: isMobile ? 16 : 18,
+                          color: Colors.grey.shade600,
+                        ),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: Text(
+                            'Published on ${_formatDate(widget.post.publishDate)}',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: isMobile ? 13 : 14,
+                                ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.width < 600 ? 24 : 32,
+                ),
+
+                // Content
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isMobile = MediaQuery.of(context).size.width < 600;
+                    return Container(
+                      padding: EdgeInsets.all(isMobile ? 16 : 20),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.grey.shade200,
+                          width: 1,
+                        ),
+                      ),
+                      child: MarkdownBody(
+                        data: widget.post.content,
+                        styleSheet: MarkdownStyleSheet(
+                          p: TextStyle(
+                            color: Colors.black87,
+                            height: 1.8,
+                            fontSize: isMobile ? 15 : 16,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 0.3,
+                          ),
+                          strong: TextStyle(
+                            color: Colors.black87,
+                            height: 1.8,
+                            fontSize: isMobile ? 15 : 16,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.3,
+                          ),
+                          h1: TextStyle(
+                            color: Colors.black87,
+                            fontSize: isMobile ? 22 : 24,
+                            fontWeight: FontWeight.bold,
+                            height: 1.3,
+                          ),
+                          h2: TextStyle(
+                            color: Colors.black87,
+                            fontSize: isMobile ? 19 : 20,
+                            fontWeight: FontWeight.bold,
+                            height: 1.3,
+                          ),
+                          h3: TextStyle(
+                            color: Colors.black87,
+                            fontSize: isMobile ? 17 : 18,
+                            fontWeight: FontWeight.bold,
+                            height: 1.3,
+                          ),
+                        ),
+                        selectable: true,
+                      ),
+                    );
+                  },
+                ),
+              ]),
             ),
+          ),
+        ],
+      ),
     );
   }
 

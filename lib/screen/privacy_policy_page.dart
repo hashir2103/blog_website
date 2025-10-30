@@ -80,6 +80,63 @@ class PrivacyPolicyPage extends StatelessWidget {
                 'If you have any questions about this Privacy Policy, please contact us at: hashirtahir2103@gmail.com',
               ),
 
+              // Ezoic Privacy Policy Embed
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Ezoic Privacy Policy',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'This website uses Ezoic for advertising and analytics. Ezoic\'s privacy policy and cookie disclosures are embedded below:',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: Colors.grey.shade200),
+                      ),
+                      child: const Text(
+                        'Ezoic Privacy Policy Content\n\nThis section will be automatically populated by Ezoic\'s privacy policy embed. The content includes:\n\n• Information about Ezoic\'s data collection\n• Cookie usage disclosures\n• Partner information\n• User rights and controls\n\nFor the complete Ezoic privacy policy, visit: http://g.ezoic.net/privacy/hbtinsights.com',
+                        style: TextStyle(
+                          fontSize: 13,
+                          height: 1.4,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'For the complete Ezoic privacy policy, visit: http://g.ezoic.net/privacy/hbtinsights.com',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.blue.shade600,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
               const SizedBox(height: 40),
             ],
           ),
