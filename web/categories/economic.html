@@ -19,10 +19,13 @@
     .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
-    .card { background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.08); display:flex; flex-direction:column; }
+    .card { background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.08); display:flex; flex-direction:column; transition:transform 0.2s, box-shadow 0.2s; cursor:pointer; }
+    .card:hover { transform:translateY(-4px); box-shadow:0 4px 20px rgba(0,0,0,0.12); }
+    .card-link { text-decoration:none; color:inherit; display:flex; flex-direction:column; height:100%; }
     .thumb { width:100%; height: 220px; background:#e5e7eb; display:block; object-fit:cover; }
-    .content { padding:16px; display:flex; flex-direction:column; gap:10px; }
+    .content { padding:16px; display:flex; flex-direction:column; gap:10px; flex:1; }
     .title { color:#1f2937; font-size:18px; font-weight:700; text-decoration:none; line-height:1.35; }
+    .card-link:hover .title { color:#dc2626; }
     .meta { color:#6b7280; font-size:13px; }
     .badge { display:inline-block; background:#dc2626; color:#fff; border-radius:4px; padding:4px 8px; font-size:12px; font-weight:600; }
   </style>
@@ -31,9 +34,9 @@
   <header>
     <div class="nav">
       <div style="display:flex; align-items:center; flex-wrap:wrap;">
-        <a class="logo" href="/home.html">HBTinsights</a>
+        <a class="logo" href="/">HBTinsights</a>
         <nav style="margin-left:16px;">
-          <a href="/home.html">Home</a>
+          <a href="/">Home</a>
           <a href="/categories/economic.html">Economics</a>
           <a href="/categories/tech.html">Technology</a>
           <a href="/categories/entertainment.html">Entertainment</a>
@@ -54,51 +57,73 @@
     <div class="grid">
       
         <article class="card">
-          <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185533013.jpg" alt="The Great Re-Architecture: Geopolitical Fragmentation, Rising Trade Costs, and the Rewiring of Global Investment in 2025">
-          <div class="content">
-            <a class="title" href="/posts/00f0ee73-9d1b-477f-b6c5-e7575261fd91.html">The Great Re-Architecture: Geopolitical Fragmentation, Rising Trade Costs, and the Rewiring of Global Investment in 2025</a>
-            <div class="meta">Published: 10/23/2025</div>
-          </div>
+          <a href="/posts/15497cce-bd8d-401d-8939-f8367e31171b.html" class="card-link">
+            <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761859818845.jpg" alt="The Q4 2025 Crossroads: Navigating Fed Easing, Fiscal Fragility, and the AI Energy Dilemma for Strategic Investment">
+            <div class="content">
+              <div class="title">The Q4 2025 Crossroads: Navigating Fed Easing, Fiscal Fragility, and the AI Energy Dilemma for Strategic Investment</div>
+              <div class="meta">Published: 10/31/2025</div>
+            </div>
+          </a>
         </article>
       
         <article class="card">
-          <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185479710.jpg" alt="The Resilience Strategy: How Quality Dividend Growth Investing Beats Sticky Inflation and Falling Rates in 2025">
-          <div class="content">
-            <a class="title" href="/posts/57b7d2bf-9ee3-478e-888d-4f5b2b62c6f6.html">The Resilience Strategy: How Quality Dividend Growth Investing Beats Sticky Inflation and Falling Rates in 2025</a>
-            <div class="meta">Published: 10/22/2025</div>
-          </div>
+          <a href="/posts/00f0ee73-9d1b-477f-b6c5-e7575261fd91.html" class="card-link">
+            <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185533013.jpg" alt="The Great Re-Architecture: Geopolitical Fragmentation, Rising Trade Costs, and the Rewiring of Global Investment in 2025">
+            <div class="content">
+              <div class="title">The Great Re-Architecture: Geopolitical Fragmentation, Rising Trade Costs, and the Rewiring of Global Investment in 2025</div>
+              <div class="meta">Published: 10/23/2025</div>
+            </div>
+          </a>
         </article>
       
         <article class="card">
-          <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185445952.jpg" alt="Beyond the Peak: Central Bank Divergence, AI's Productivity Surge, and the Geopolitical Fracture Shaping the Global Economy in 2026">
-          <div class="content">
-            <a class="title" href="/posts/54fbadd7-581f-4d2a-95d0-f76a23f0514a.html">Beyond the Peak: Central Bank Divergence, AI's Productivity Surge, and the Geopolitical Fracture Shaping the Global Economy in 2026</a>
-            <div class="meta">Published: 10/21/2025</div>
-          </div>
+          <a href="/posts/57b7d2bf-9ee3-478e-888d-4f5b2b62c6f6.html" class="card-link">
+            <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185479710.jpg" alt="The Resilience Strategy: How Quality Dividend Growth Investing Beats Sticky Inflation and Falling Rates in 2025">
+            <div class="content">
+              <div class="title">The Resilience Strategy: How Quality Dividend Growth Investing Beats Sticky Inflation and Falling Rates in 2025</div>
+              <div class="meta">Published: 10/22/2025</div>
+            </div>
+          </a>
         </article>
       
         <article class="card">
-          <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185394206.jpg" alt="The Geopolitical Chokepoint: Analyzing the Cascading Economic Shockwaves from the US-China Rare Earth and Tariff Escalation (Q4 2025)">
-          <div class="content">
-            <a class="title" href="/posts/39ed65a2-e046-4e2d-89ff-e0c823b675cd.html">The Geopolitical Chokepoint: Analyzing the Cascading Economic Shockwaves from the US-China Rare Earth and Tariff Escalation (Q4 2025)</a>
-            <div class="meta">Published: 10/20/2025</div>
-          </div>
+          <a href="/posts/54fbadd7-581f-4d2a-95d0-f76a23f0514a.html" class="card-link">
+            <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185445952.jpg" alt="Beyond the Peak: Central Bank Divergence, AI's Productivity Surge, and the Geopolitical Fracture Shaping the Global Economy in 2026">
+            <div class="content">
+              <div class="title">Beyond the Peak: Central Bank Divergence, AI's Productivity Surge, and the Geopolitical Fracture Shaping the Global Economy in 2026</div>
+              <div class="meta">Published: 10/21/2025</div>
+            </div>
+          </a>
         </article>
       
         <article class="card">
-          <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185307680.jpg" alt="The Fed Is Cutting Rates: Here’s How to Lock In 4%+ Yields Safely with a 2025 T-Bill Ladder">
-          <div class="content">
-            <a class="title" href="/posts/b335a5e7-2315-4f2b-a97f-5f84b09fd9f5.html">The Fed Is Cutting Rates: Here’s How to Lock In 4%+ Yields Safely with a 2025 T-Bill Ladder</a>
-            <div class="meta">Published: 10/20/2025</div>
-          </div>
+          <a href="/posts/39ed65a2-e046-4e2d-89ff-e0c823b675cd.html" class="card-link">
+            <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185394206.jpg" alt="The Geopolitical Chokepoint: Analyzing the Cascading Economic Shockwaves from the US-China Rare Earth and Tariff Escalation (Q4 2025)">
+            <div class="content">
+              <div class="title">The Geopolitical Chokepoint: Analyzing the Cascading Economic Shockwaves from the US-China Rare Earth and Tariff Escalation (Q4 2025)</div>
+              <div class="meta">Published: 10/20/2025</div>
+            </div>
+          </a>
         </article>
       
         <article class="card">
-          <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761184410197.jpg" alt="The Great Divergence: Why the AI-Powered U.S. Economy Is Leaving a Stagnant World Behind">
-          <div class="content">
-            <a class="title" href="/posts/5056aa50-b8e9-4947-8d5e-ba7fb1cca20a.html">The Great Divergence: Why the AI-Powered U.S. Economy Is Leaving a Stagnant World Behind</a>
-            <div class="meta">Published: 10/19/2025</div>
-          </div>
+          <a href="/posts/b335a5e7-2315-4f2b-a97f-5f84b09fd9f5.html" class="card-link">
+            <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761185307680.jpg" alt="The Fed Is Cutting Rates: Here’s How to Lock In 4%+ Yields Safely with a 2025 T-Bill Ladder">
+            <div class="content">
+              <div class="title">The Fed Is Cutting Rates: Here’s How to Lock In 4%+ Yields Safely with a 2025 T-Bill Ladder</div>
+              <div class="meta">Published: 10/20/2025</div>
+            </div>
+          </a>
+        </article>
+      
+        <article class="card">
+          <a href="/posts/5056aa50-b8e9-4947-8d5e-ba7fb1cca20a.html" class="card-link">
+            <img class="thumb" src="https://hmondborecvxxsoerldk.supabase.co/storage/v1/object/public/blog-images/1761184410197.jpg" alt="The Great Divergence: Why the AI-Powered U.S. Economy Is Leaving a Stagnant World Behind">
+            <div class="content">
+              <div class="title">The Great Divergence: Why the AI-Powered U.S. Economy Is Leaving a Stagnant World Behind</div>
+              <div class="meta">Published: 10/19/2025</div>
+            </div>
+          </a>
         </article>
       
     </div>
